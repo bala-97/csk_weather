@@ -1,0 +1,55 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    # ------ Disable individual rules ----- #
+    #                 ---                   #
+    # Turn off what you don't like.         #
+    # ------------------------------------- #
+
+    # Use parameter order as in json response
+    always_put_required_named_parameters_first: false
+
+    sort_pub_dependencies: false
+
+    # ------ Enable individual rules ------ #
+    #                 ---                   #
+    # These rules here are good but too     #
+    # opinionated to enable them by default #
+    # ------------------------------------- #
+
+    # Make constructors the first thing in every class
+    sort_constructors_first: true
+
+    # Good packages document everything
+    public_member_api_docs: true
+
+    # We allow lines linger than 80 characters
+    lines_longer_than_80_chars: false
+
+analyzer:
+  exclude:
+    # Ignore generated files as we have no control over their formatting
+    - "lib/**.g.dart"
+    - "test/**.mocks.dart"
+  strong-mode:
+    # Will become the default once non-nullable types land
+    # https://github.com/dart-lang/sdk/issues/31410#issuecomment-510683629
+    implicit-casts: false
+  errors:
+    parameter_assignments: error
+    # treat missing required parameters as a warning (not a hint)
+    missing_required_param: error
+    # treat missing returns as a warning (not a hint)
+    missing_return: error
+    # force enum switch statements to be exhausting
+    missing_enum_constant_in_switch: error
+    # should not use @override if you are not overriding something
+    override_on_non_overriding_member: error
+    # should always annotate overrides
+    annotate_overrides: error
+    # allow having TODOs in the code
+    todo: warning
+    # Ensure a type is provided for unintialised variables
+    prefer_typing_uninitialized_variables: error
+    avoid_bool_literals_in_conditional_expressions: error
