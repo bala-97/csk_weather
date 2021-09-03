@@ -60,24 +60,25 @@ class _ClickCounter extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
             final data = snapshot.hasData ? snapshot.data! : 0;
             return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                Expanded(child: Text(
                   "$data",
+                  textAlign: TextAlign.center,
                   style: textTheme.headline4,
-                ),
-                FloatingActionButton(
+                )),
+                Expanded(child: FloatingActionButton(
                   onPressed: () {
                     homeVm.incrementTheCounter(data + 1);
                   },
                   child: const Icon(Icons.add),
-                ),
-                FloatingActionButton(
+                )),
+                Expanded(child: FloatingActionButton(
                   onPressed: () {
                     homeVm.switchMode();
                   },
                   child: const Icon(Icons.visibility_outlined),
-                ),
+                )),
               ],
             );
           }),
@@ -95,9 +96,6 @@ class _CityAndWeather extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    final String cityName = report.cityName;
-    final String todayDate = report.localTime!;
-    final int temperature = report.temperature!.toInt();
 
     return SizedBox(
       height: size.height * .4,
@@ -105,17 +103,17 @@ class _CityAndWeather extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(cityName, style: textTheme.subtitle1!.copyWith(fontWeight: FontWeight.bold)),
+          Text(report.cityName, style: textTheme.headline5!.copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Text(
-            todayDate,
-            style: textTheme.subtitle2,
+            report.localTime!,
+            style: textTheme.subtitle1,
           ),
           const SizedBox(height: 10),
           Image.network("https:${report.iconUrl}"),
           const SizedBox(height: 10),
           Text(
-            "$temperature \u2109",
+            "${report.temperature} \u2103",
             style: textTheme.headline3,
           ),
         ],
@@ -158,7 +156,7 @@ class _ExtraWeatherInfo extends StatelessWidget {
             children: [
               _ExtraInfoCard(
                 title: homeVm.temperatureTitle,
-                data: "${report.temperature} \u2109",
+                data: "${report.temperature} C",
               ),
               _ExtraInfoCard(
                 title: homeVm.uvIndexTitle,
